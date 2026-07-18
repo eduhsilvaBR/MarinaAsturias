@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { navGroups, siteInfo } from "@/content/site";
 
@@ -6,7 +7,9 @@ export default function Footer() {
     <footer className="border-t border-cream/10 bg-navy-deep">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-4 lg:px-10">
         <div>
-          <div className="font-serif text-xl tracking-[0.2em] text-cream">MARINA ASTÚRIAS</div>
+          <div className="relative h-14 w-[130px]">
+            <Image src="/logo/logo-branco.png" alt="Marina Astúrias" fill className="object-contain object-left" />
+          </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-cream/60">{siteInfo.boilerplate}</p>
           <div className="mt-6 flex gap-4 text-xs tracking-wide text-cream/60">
             <a href={siteInfo.social.facebook} target="_blank" rel="noreferrer" className="hover:text-gold">

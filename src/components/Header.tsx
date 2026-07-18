@@ -1,9 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { navGroups, siteInfo } from "@/content/site";
+import { navGroups } from "@/content/site";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -27,11 +28,11 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
-        <Link href="/" className="font-serif text-xl tracking-[0.2em] text-cream lg:text-2xl">
-          MARINA ASTÚRIAS
+        <Link href="/" className="relative block h-12 w-[100px] shrink-0 lg:h-14 lg:w-[116px]">
+          <Image src="/logo/logo-branco.png" alt="Marina Astúrias" fill className="object-contain object-left" priority />
         </Link>
 
-        <nav className="hidden items-center gap-5 text-[12px] tracking-[0.05em] text-cream/85 xl:gap-6 lg:flex">
+        <nav className="hidden items-center gap-5 text-[12px] tracking-[0.05em] text-cream/85 xl:gap-7 lg:flex">
           {navGroups.map((item) => (
             <div key={item.label} className="group relative py-2">
               <Link href={item.href} className="whitespace-nowrap transition-colors hover:text-gold">
@@ -55,15 +56,6 @@ export default function Header() {
             </div>
           ))}
         </nav>
-
-        <a
-          href={siteInfo.whatsappHref}
-          target="_blank"
-          rel="noreferrer"
-          className="hidden shrink-0 whitespace-nowrap border border-gold/70 px-5 py-2.5 text-[12px] tracking-[0.12em] text-gold transition-colors hover:bg-gold hover:text-navy-deep lg:inline-block"
-        >
-          WHATSAPP
-        </a>
 
         <button
           aria-label="Abrir menu"
@@ -108,9 +100,6 @@ export default function Header() {
                   )}
                 </div>
               ))}
-              <a href={siteInfo.whatsappHref} className="mt-5 border border-gold/70 px-5 py-3 text-center text-xs tracking-[0.12em] text-gold">
-                WHATSAPP
-              </a>
             </div>
           </motion.nav>
         )}

@@ -154,19 +154,17 @@ export default function Home() {
           </h3>
           <p className="mx-auto mt-4 max-w-lg text-[15px] text-cream/70">{siteInfo.address}</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-5">
-            <a
-              href={siteInfo.whatsappHref}
-              target="_blank"
-              rel="noreferrer"
-              className="border border-gold bg-gold px-8 py-3.5 text-[13px] tracking-[0.15em] text-navy-deep transition-colors hover:bg-transparent hover:text-gold"
-            >
-              WHATSAPP {siteInfo.whatsapp}
-            </a>
             <Link
               href="/fale-conosco"
-              className="border border-cream/40 px-8 py-3.5 text-[13px] tracking-[0.15em] text-cream transition-colors hover:border-cream hover:bg-cream/10"
+              className="border border-gold bg-gold px-8 py-3.5 text-[13px] tracking-[0.15em] text-navy-deep transition-colors hover:bg-transparent hover:text-gold"
             >
               FALE CONOSCO
+            </Link>
+            <Link
+              href="/eventos"
+              className="border border-cream/40 px-8 py-3.5 text-[13px] tracking-[0.15em] text-cream transition-colors hover:border-cream hover:bg-cream/10"
+            >
+              VER EVENTOS
             </Link>
           </div>
         </Reveal>

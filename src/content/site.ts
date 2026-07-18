@@ -29,7 +29,6 @@ export const siteInfo = {
 
 export const navGroups = [
   { label: "Conheça a Marina", href: "/conheca-a-marina" },
-  { label: "Serviços", href: "/servicos" },
   {
     label: "Estrutura",
     href: "/estrutura",
@@ -46,10 +45,9 @@ export const navGroups = [
       { label: "Sala Rádio", href: "/sala-de-radio" },
     ],
   },
-  { label: "Parceiros", href: "/parceiros" },
+  { label: "Eventos", href: "/eventos" },
   { label: "Galeria", href: "/galeria" },
   { label: "Tempo e Navegação", href: "/tempo-e-navegacao" },
-  { label: "Indique", href: "/indique" },
   { label: "Fale Conosco", href: "/fale-conosco" },
 ] as const;
 
@@ -124,25 +122,6 @@ export const interiorPages: Record<string, InteriorPage> = {
       "Restaurante",
     ],
     gallery: [`${UP2103}/marina1.jpg`, `${UP2103}/marina2.jpg`, `${UP2103}/marina3.jpg`, `${UP2103}/marina4.jpg`],
-  },
-  servicos: {
-    slug: "servicos",
-    nav: "Serviços",
-    title: "Serviços",
-    subtitle: "O que oferecemos",
-    hero: `${UP2103}/servicos_topo.jpg`,
-    paragraphs: [
-      "Com o intuito de proporcionar mais comodidade aos seus frequentadores, a Marina oferece serviços terceirizados, com escritórios dentro de suas dependências.",
-    ],
-    list: [
-      "Áreas destinadas a conserto e reparo de embarcações",
-      "Empresas de vendas de embarcações",
-      "Seguros náuticos",
-      "Acessórios de decoração",
-      "Transporte regular Santos / Marina Astúrias — Guarujá",
-      "Serviço de resgate de embarcações em problemas",
-    ],
-    gallery: [`${UP2103}/marina18b.jpg`],
   },
   "hangares-fechados": {
     slug: "hangares-fechados",
@@ -339,16 +318,6 @@ export const interiorPages: Record<string, InteriorPage> = {
     stats: [{ value: "Zulu 60", label: "Prefixo" }],
     gallery: [`${UP2104}/sala-de-radio1-660x660.jpg`, `${UP2104}/IMG_0340-660x660.jpg`, `${UP2104}/IMG_0336-660x660.jpg`],
   },
-  parceiros: {
-    slug: "parceiros",
-    nav: "Parceiros",
-    title: "Parceiros",
-    hero: `${UP2103}/destaques-1.jpg`,
-    paragraphs: [
-      "Empresas parceiras que atuam dentro e ao lado da comunidade náutica da Marina Astúrias.",
-    ],
-    gallery: [`${UP2104}/Marine_Broker-300x197.jpg`],
-  },
   "tempo-e-navegacao": {
     slug: "tempo-e-navegacao",
     nav: "Tempo e Navegação",
@@ -357,6 +326,30 @@ export const interiorPages: Record<string, InteriorPage> = {
     hero: `${UP2103}/conheca-1.jpg`,
     paragraphs: [
       "Acompanhe a previsão do tempo e a tábua de marés antes de zarpar. Para a tábua de marés oficial do Canal de Santos, consulte a Marinha do Brasil ou fale com a Central de Atendimento da Marina.",
+    ],
+  },
+};
+
+export const eventos = {
+  hero: "/eventos/feijoada-hero.jpg",
+  intro:
+    "A Marina Astúrias recebe encontros especiais à beira do Canal de Santos, com estrutura de gastronomia, vista para os píeres e todo o conforto de um clube náutico.",
+  featured: {
+    title: "Feijoada na Marina",
+    paragraphs: [
+      "Um clássico dos finais de semana: feijoada completa, servida com arroz, couve, torresmo, farofa e laranja, à beira da marina.",
+      "Ambiente descontraído, com vista para os píeres e as embarcações — ideal para reunir família e amigos.",
+    ],
+    gallery: [
+      "/eventos/feijoada-1.jpg",
+      "/eventos/feijoada-2.jpg",
+      "/eventos/feijoada-3.jpg",
+      "/eventos/feijoada-4.jpg",
+      "/eventos/feijoada-5.jpg",
+      "/eventos/feijoada-6.jpg",
+      "/eventos/feijoada-7.jpg",
+      "/eventos/feijoada-8.jpg",
+      "/eventos/feijoada-9.jpg",
     ],
   },
 };
