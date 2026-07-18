@@ -71,19 +71,6 @@ export const homeGallery = Array.from({ length: 12 }, (_, i) => {
   return `${UP2104}/imagem${n}.jpg`;
 });
 
-// Números de marinaN.jpg confirmados individualmente (HTTP 200) via curl.
-const GALLERY_NUMBERS = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 20, 22, 24, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 50, 55, 60, 65,
-  70, 75, 77,
-];
-
-export const fullGallery = [
-  ...GALLERY_NUMBERS.map((n) => `${UP2103}/marina${n}.jpg`),
-  `${UP2103}/Capturar.jpg`,
-  `${UP2103}/Capturar2.jpg`,
-  `${UP2103}/Capturar3.jpg`,
-];
-
 export type InteriorPage = {
   slug: string;
   nav: string;
@@ -317,39 +304,5 @@ export const interiorPages: Record<string, InteriorPage> = {
     ],
     stats: [{ value: "Zulu 60", label: "Prefixo" }],
     gallery: [`${UP2104}/sala-de-radio1-660x660.jpg`, `${UP2104}/IMG_0340-660x660.jpg`, `${UP2104}/IMG_0336-660x660.jpg`],
-  },
-  "tempo-e-navegacao": {
-    slug: "tempo-e-navegacao",
-    nav: "Tempo e Navegação",
-    title: "Tempo e Navegação",
-    subtitle: "Tábua de Marés",
-    hero: `${UP2103}/conheca-1.jpg`,
-    paragraphs: [
-      "Acompanhe a previsão do tempo e a tábua de marés antes de zarpar. Para a tábua de marés oficial do Canal de Santos, consulte a Marinha do Brasil ou fale com a Central de Atendimento da Marina.",
-    ],
-  },
-};
-
-export const eventos = {
-  hero: "/eventos/feijoada-hero.jpg",
-  intro:
-    "A Marina Astúrias recebe encontros especiais à beira do Canal de Santos, com estrutura de gastronomia, vista para os píeres e todo o conforto de um clube náutico.",
-  featured: {
-    title: "Feijoada na Marina",
-    paragraphs: [
-      "Um clássico dos finais de semana: feijoada completa, servida com arroz, couve, torresmo, farofa e laranja, à beira da marina.",
-      "Ambiente descontraído, com vista para os píeres e as embarcações — ideal para reunir família e amigos.",
-    ],
-    gallery: [
-      "/eventos/feijoada-1.jpg",
-      "/eventos/feijoada-2.jpg",
-      "/eventos/feijoada-3.jpg",
-      "/eventos/feijoada-4.jpg",
-      "/eventos/feijoada-5.jpg",
-      "/eventos/feijoada-6.jpg",
-      "/eventos/feijoada-7.jpg",
-      "/eventos/feijoada-8.jpg",
-      "/eventos/feijoada-9.jpg",
-    ],
   },
 };

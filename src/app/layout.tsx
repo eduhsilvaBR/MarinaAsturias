@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Libre_Franklin } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import SmoothScroll from "@/components/SmoothScroll";
-import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -31,13 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={`${cormorant.variable} ${libre.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-navy">
-        <SmoothScroll />
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <FloatingWhatsApp />
-      </body>
+      <body className="min-h-full flex flex-col bg-navy">{children}</body>
     </html>
   );
 }

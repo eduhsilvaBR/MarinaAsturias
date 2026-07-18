@@ -7,8 +7,11 @@ export default function Footer() {
     <footer className="border-t border-cream/10 bg-navy-deep">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-4 lg:px-10">
         <div>
-          <div className="relative h-14 w-[130px]">
-            <Image src="/logo/logo-branco.png" alt="Marina Astúrias" fill className="object-contain object-left" />
+          <div className="flex items-center gap-3">
+            <span className="relative block h-11 w-11 shrink-0">
+              <Image src="/logo/icon-color.png" alt="Marina Astúrias" fill className="object-contain" />
+            </span>
+            <span className="font-serif text-lg tracking-[0.18em] text-cream">MARINA ASTÚRIAS</span>
           </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-cream/60">{siteInfo.boilerplate}</p>
           <div className="mt-6 flex gap-4 text-xs tracking-wide text-cream/60">

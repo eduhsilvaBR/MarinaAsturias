@@ -2,14 +2,18 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import GalleryGrid from "@/components/GalleryGrid";
 import Reveal from "@/components/Reveal";
-import { fullGallery } from "@/content/site";
+import { readGallery } from "@/lib/store";
 
 export const metadata: Metadata = {
   title: "Galeria — Marina Astúrias",
   description: "Fotos da Porto Marina Astúrias no Guarujá.",
 };
 
-export default function GaleriaPage() {
+export const dynamic = "force-dynamic";
+
+export default async function GaleriaPage() {
+  const items = await readGallery();
+
   return (
     <>
       <section className="relative flex h-[40vh] min-h-[300px] items-end overflow-hidden bg-navy-deep">
@@ -32,7 +36,7 @@ export default function GaleriaPage() {
         <Reveal className="mb-10 max-w-2xl text-[15px] leading-relaxed text-cream/70">
           Um pouco da estrutura, das embarcações e dos momentos vividos na Porto Marina Astúrias.
         </Reveal>
-        <GalleryGrid images={fullGallery} />
+        <GalleryGrid images={items.map((i) => i.src)} />
       </section>
     </>
   );

@@ -28,8 +28,11 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
-        <Link href="/" className="relative block h-12 w-[100px] shrink-0 lg:h-14 lg:w-[116px]">
-          <Image src="/logo/logo-branco.png" alt="Marina Astúrias" fill className="object-contain object-left" priority />
+        <Link href="/" className="flex shrink-0 items-center gap-3">
+          <span className="relative block h-10 w-10 shrink-0 lg:h-11 lg:w-11">
+            <Image src="/logo/icon-color.png" alt="Marina Astúrias" fill className="object-contain" priority />
+          </span>
+          <span className="font-serif text-lg tracking-[0.18em] text-cream lg:text-xl">MARINA ASTÚRIAS</span>
         </Link>
 
         <nav className="hidden items-center gap-5 text-[12px] tracking-[0.05em] text-cream/85 xl:gap-7 lg:flex">

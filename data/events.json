@@ -1,0 +1,20 @@
+[
+  {
+    "id": "feijoada-na-marina",
+    "name": "Feijoada na Marina",
+    "date": "2024-08-10",
+    "description": "Um clássico dos finais de semana: feijoada completa, servida com arroz, couve, torresmo, farofa e laranja, à beira da marina.",
+    "photos": [
+      "/eventos/feijoada-hero.jpg",
+      "/eventos/feijoada-1.jpg",
+      "/eventos/feijoada-2.jpg",
+      "/eventos/feijoada-3.jpg",
+      "/eventos/feijoada-4.jpg",
+      "/eventos/feijoada-5.jpg",
+      "/eventos/feijoada-6.jpg",
+      "/eventos/feijoada-7.jpg",
+      "/eventos/feijoada-8.jpg",
+      "/eventos/feijoada-9.jpg"
+    ]
+  }
+]
