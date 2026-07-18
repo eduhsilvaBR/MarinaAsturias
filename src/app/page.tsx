@@ -104,7 +104,7 @@ export default function Home() {
         <RevealGroup className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6" stagger={0.05}>
           {homeGallery.map((src, i) => (
             <RevealItem key={src} y={16} className="relative aspect-square overflow-hidden">
-              <Link href="/galeria" className="group block h-full w-full">
+              <Link href="/galeria" className="group relative block h-full w-full">
                 <Image
                   src={src}
                   alt={`Marina Astúrias — foto ${i + 1}`}

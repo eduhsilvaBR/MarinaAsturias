@@ -28,7 +28,7 @@ export default function GalleryGrid({ images }: { images: string[] }) {
       <RevealGroup className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4" stagger={0.03}>
         {images.map((src, i) => (
           <RevealItem key={src} y={16} className="group relative aspect-square overflow-hidden">
-            <button onClick={() => setActive(i)} className="block h-full w-full">
+            <button onClick={() => setActive(i)} className="relative block h-full w-full">
               <Image
                 src={src}
                 alt={`Marina Astúrias — foto ${i + 1}`}
