@@ -45,16 +45,21 @@ export default function EventEditClient({ event: initialEvent }: { event: EventI
     const form = new FormData();
     Array.from(files).forEach((f) => form.append("photos", f));
 
-    const res = await fetch(`/api/admin/events/${event.id}/photos`, { method: "POST", body: form });
-    const data = await res.json();
-    setUploading(false);
-    if (!res.ok) {
-      setError(data.error || "Erro ao enviar fotos.");
-      return;
+    try {
+      const res = await fetch(`/api/admin/events/${event.id}/photos`, { method: "POST", body: form });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setError(data.error || `Erro ao enviar fotos (${res.status}).`);
+        return;
+      }
+      setEvent(data.event);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      router.refresh();
+    } catch {
+      setError("Falha de conexão ao enviar fotos. Tente novamente.");
+    } finally {
+      setUploading(false);
     }
-    setEvent(data.event);
-    if (fileInputRef.current) fileInputRef.current.value = "";
-    router.refresh();
   }
 
   async function handleDeletePhoto(src: string) {

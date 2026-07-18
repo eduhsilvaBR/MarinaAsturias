@@ -22,16 +22,21 @@ export default function GalleryAdminClient({ initialItems }: { initialItems: Gal
     const form = new FormData();
     Array.from(files).forEach((f) => form.append("photos", f));
 
-    const res = await fetch("/api/admin/gallery", { method: "POST", body: form });
-    const data = await res.json();
-    setUploading(false);
-    if (!res.ok) {
-      setError(data.error || "Erro ao enviar fotos.");
-      return;
+    try {
+      const res = await fetch("/api/admin/gallery", { method: "POST", body: form });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setError(data.error || `Erro ao enviar fotos (${res.status}).`);
+        return;
+      }
+      setItems(data.items);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      router.refresh();
+    } catch {
+      setError("Falha de conexão ao enviar fotos. Tente novamente.");
+    } finally {
+      setUploading(false);
     }
-    setItems(data.items);
-    if (fileInputRef.current) fileInputRef.current.value = "";
-    router.refresh();
   }
 
   async function handleDelete(id: string) {

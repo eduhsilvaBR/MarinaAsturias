@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import EventDescription from "@/components/EventDescription";
 import GalleryGrid from "@/components/GalleryGrid";
 import Reveal from "@/components/Reveal";
 import { readEvents } from "@/lib/store";
@@ -40,7 +41,9 @@ export default async function EventoDetailPage({ params }: { params: Promise<{ i
 
       <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
         {event.description && (
-          <Reveal className="mb-10 max-w-2xl text-[15px] leading-relaxed text-cream/75">{event.description}</Reveal>
+          <Reveal className="mb-12 max-w-2xl">
+            <EventDescription text={event.description} />
+          </Reveal>
         )}
         <GalleryGrid images={event.photos} />
 
