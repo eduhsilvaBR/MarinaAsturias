@@ -1,6 +1,8 @@
 import { promises as fs } from "fs";
 import path from "path";
 import sharp from "sharp";
+import { put, del } from "@vercel/blob";
+import { Redis } from "@upstash/redis";
 
 export type EventItem = {
   id: string;
@@ -20,7 +22,25 @@ const EVENTS_PATH = path.join(DATA_DIR, "events.json");
 const GALLERY_PATH = path.join(DATA_DIR, "gallery.json");
 const UPLOADS_DIR = path.join(process.cwd(), "public", "uploads");
 
-async function readJson<T>(filePath: string, fallback: T): Promise<T> {
+const EVENTS_KEY = "marina:events";
+const GALLERY_KEY = "marina:gallery";
+
+// --- Cloud storage (Vercel Blob + Upstash Redis) is used automatically when
+// configured (production on Vercel). Falls back to local disk otherwise, so
+// this project still works fully offline in dev without any cloud setup. ---
+
+function getRedis(): Redis | null {
+  const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
+  if (!url || !token) return null;
+  return new Redis({ url, token });
+}
+
+function hasBlobStorage() {
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+}
+
+async function readJsonFile<T>(filePath: string, fallback: T): Promise<T> {
   try {
     const raw = await fs.readFile(filePath, "utf8");
     return JSON.parse(raw) as T;
@@ -29,25 +49,33 @@ async function readJson<T>(filePath: string, fallback: T): Promise<T> {
   }
 }
 
-async function writeJson(filePath: string, data: unknown) {
+async function writeJsonFile(filePath: string, data: unknown) {
   await fs.mkdir(path.dirname(filePath), { recursive: true });
   await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf8");
 }
 
-export function readEvents() {
-  return readJson<EventItem[]>(EVENTS_PATH, []);
+export async function readEvents(): Promise<EventItem[]> {
+  const redis = getRedis();
+  if (redis) return (await redis.get<EventItem[]>(EVENTS_KEY)) ?? [];
+  return readJsonFile<EventItem[]>(EVENTS_PATH, []);
 }
 
-export function writeEvents(events: EventItem[]) {
-  return writeJson(EVENTS_PATH, events);
+export async function writeEvents(events: EventItem[]) {
+  const redis = getRedis();
+  if (redis) return void (await redis.set(EVENTS_KEY, events));
+  return writeJsonFile(EVENTS_PATH, events);
 }
 
-export function readGallery() {
-  return readJson<GalleryItem[]>(GALLERY_PATH, []);
+export async function readGallery(): Promise<GalleryItem[]> {
+  const redis = getRedis();
+  if (redis) return (await redis.get<GalleryItem[]>(GALLERY_KEY)) ?? [];
+  return readJsonFile<GalleryItem[]>(GALLERY_PATH, []);
 }
 
-export function writeGallery(items: GalleryItem[]) {
-  return writeJson(GALLERY_PATH, items);
+export async function writeGallery(items: GalleryItem[]) {
+  const redis = getRedis();
+  if (redis) return void (await redis.set(GALLERY_KEY, items));
+  return writeJsonFile(GALLERY_PATH, items);
 }
 
 export function slugify(text: string) {
@@ -60,22 +88,36 @@ export function slugify(text: string) {
     .replace(/(^-|-$)/g, "");
 }
 
-/** Resizes and saves an uploaded image under public/uploads/<folder>/, returns the public URL path. */
+/** Resizes an uploaded image and stores it (Vercel Blob in production, local disk in dev). Returns the public URL. */
 export async function saveUploadedImage(buffer: Buffer, folder: string, hint: string) {
-  const dir = path.join(UPLOADS_DIR, folder);
-  await fs.mkdir(dir, { recursive: true });
-  const filename = `${Date.now()}-${slugify(hint) || "foto"}.jpg`;
-  const filePath = path.join(dir, filename);
-  await sharp(buffer)
+  const resized = await sharp(buffer)
     .rotate()
     .resize({ width: 2000, height: 2000, fit: "inside", withoutEnlargement: true })
     .jpeg({ quality: 82 })
-    .toFile(filePath);
+    .toBuffer();
+
+  const filename = `${Date.now()}-${slugify(hint) || "foto"}.jpg`;
+
+  if (hasBlobStorage()) {
+    const blob = await put(`${folder}/${filename}`, resized, {
+      access: "public",
+      contentType: "image/jpeg",
+    });
+    return blob.url;
+  }
+
+  const dir = path.join(UPLOADS_DIR, folder);
+  await fs.mkdir(dir, { recursive: true });
+  await fs.writeFile(path.join(dir, filename), resized);
   return `/uploads/${folder}/${filename}`;
 }
 
-/** Deletes an uploaded file, but only if it lives under /uploads/ (never touches seeded/static assets). */
+/** Deletes an uploaded file. Only ever touches Blob URLs or local /uploads/ paths — never seeded/static assets. */
 export async function deleteUploadedImage(publicPath: string) {
+  if (hasBlobStorage() && publicPath.includes(".public.blob.vercel-storage.com")) {
+    await del(publicPath).catch(() => {});
+    return;
+  }
   if (!publicPath.startsWith("/uploads/")) return;
   const filePath = path.join(process.cwd(), "public", publicPath);
   await fs.rm(filePath, { force: true });

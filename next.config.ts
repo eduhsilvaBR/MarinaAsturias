@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
         hostname: "marinasturias.com.br",
         pathname: "/wp-content/uploads/**",
       },
+      {
+        protocol: "https",
+        hostname: "*.public.blob.vercel-storage.com",
+      },
     ],
   },
 };
