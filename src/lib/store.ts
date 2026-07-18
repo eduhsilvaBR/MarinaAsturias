@@ -30,8 +30,17 @@ const GALLERY_KEY = "marina:gallery";
 // this project still works fully offline in dev without any cloud setup. ---
 
 function getRedis(): Redis | null {
-  const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
+  // The exact env var names depend on how the Upstash/KV integration was
+  // connected in Vercel (custom prefixes get prepended to Vercel's own
+  // default names), so we check every naming pattern we've actually seen.
+  const url =
+    process.env.UPSTASH_REDIS_REST_URL ||
+    process.env.KV_REST_API_URL ||
+    process.env.UPSTASH_REDIS_REST_KV_REST_API_URL;
+  const token =
+    process.env.UPSTASH_REDIS_REST_TOKEN ||
+    process.env.KV_REST_API_TOKEN ||
+    process.env.UPSTASH_REDIS_REST_KV_REST_API_TOKEN;
   if (!url || !token) return null;
   return new Redis({ url, token });
 }
