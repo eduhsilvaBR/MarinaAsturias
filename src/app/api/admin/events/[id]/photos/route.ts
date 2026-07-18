@@ -28,7 +28,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   try {
     for (const file of toUpload) {
       const buffer = Buffer.from(await file.arrayBuffer());
-      const url = await saveUploadedImage(buffer, `events/${event.id}`, file.name);
+      const url = await saveUploadedImage(buffer, `events/${event.id}`, file.name, file.type);
       newUrls.push(url);
     }
   } catch (err) {

@@ -97,27 +97,44 @@ export function slugify(text: string) {
     .replace(/(^-|-$)/g, "");
 }
 
-/** Resizes an uploaded image and stores it (Vercel Blob in production, local disk in dev). Returns the public URL. */
-export async function saveUploadedImage(buffer: Buffer, folder: string, hint: string) {
-  const resized = await sharp(buffer)
-    .rotate()
-    .resize({ width: 2000, height: 2000, fit: "inside", withoutEnlargement: true })
-    .jpeg({ quality: 82 })
-    .toBuffer();
+/**
+ * Stores an uploaded image (Vercel Blob in production, local disk in dev) and
+ * returns its public URL. Tries to resize/compress with sharp first (keeps
+ * storage small), but sharp's native binary is unreliable in some serverless
+ * environments — if it fails or isn't usable, falls back to storing the
+ * original file untouched rather than losing the upload. Display-time
+ * resizing still happens via next/image regardless.
+ */
+export async function saveUploadedImage(buffer: Buffer, folder: string, hint: string, mimeType = "image/jpeg") {
+  let body: Buffer = buffer;
+  let ext = mimeType === "image/png" ? "png" : mimeType === "image/webp" ? "webp" : "jpg";
+  let contentType = mimeType || "application/octet-stream";
 
-  const filename = `${Date.now()}-${slugify(hint) || "foto"}.jpg`;
+  try {
+    body = await sharp(buffer)
+      .rotate()
+      .resize({ width: 2000, height: 2000, fit: "inside", withoutEnlargement: true })
+      .jpeg({ quality: 82 })
+      .toBuffer();
+    ext = "jpg";
+    contentType = "image/jpeg";
+  } catch (err) {
+    console.error("sharp processing failed, storing original file instead", err);
+  }
+
+  const filename = `${Date.now()}-${slugify(hint) || "foto"}.${ext}`;
 
   if (hasBlobStorage()) {
-    const blob = await put(`${folder}/${filename}`, resized, {
+    const blob = await put(`${folder}/${filename}`, body, {
       access: "public",
-      contentType: "image/jpeg",
+      contentType,
     });
     return blob.url;
   }
 
   const dir = path.join(UPLOADS_DIR, folder);
   await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(path.join(dir, filename), resized);
+  await fs.writeFile(path.join(dir, filename), body);
   return `/uploads/${folder}/${filename}`;
 }
 

@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
   const newItems: GalleryItem[] = [];
   try {
     for (const file of files) {
-      const src = await saveUploadedImage(Buffer.from(await file.arrayBuffer()), "galeria", file.name);
+      const src = await saveUploadedImage(Buffer.from(await file.arrayBuffer()), "galeria", file.name, file.type);
       newItems.push({ id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, src });
     }
   } catch (err) {
