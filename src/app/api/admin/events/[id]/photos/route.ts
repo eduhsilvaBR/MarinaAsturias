@@ -25,10 +25,16 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
   const toUpload = files.slice(0, slotsLeft);
   const newUrls: string[] = [];
-  for (const file of toUpload) {
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const url = await saveUploadedImage(buffer, `events/${event.id}`, file.name);
-    newUrls.push(url);
+  try {
+    for (const file of toUpload) {
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const url = await saveUploadedImage(buffer, `events/${event.id}`, file.name);
+      newUrls.push(url);
+    }
+  } catch (err) {
+    console.error("upload failed", err);
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ error: `Falha ao processar imagem: ${message}` }, { status: 500 });
   }
 
   event.photos.push(...newUrls);

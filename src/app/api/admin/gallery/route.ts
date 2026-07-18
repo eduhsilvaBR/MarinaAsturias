@@ -19,9 +19,15 @@ export async function POST(request: NextRequest) {
 
   const items = await readGallery();
   const newItems: GalleryItem[] = [];
-  for (const file of files) {
-    const src = await saveUploadedImage(Buffer.from(await file.arrayBuffer()), "galeria", file.name);
-    newItems.push({ id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, src });
+  try {
+    for (const file of files) {
+      const src = await saveUploadedImage(Buffer.from(await file.arrayBuffer()), "galeria", file.name);
+      newItems.push({ id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, src });
+    }
+  } catch (err) {
+    console.error("upload failed", err);
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ error: `Falha ao processar imagem: ${message}` }, { status: 500 });
   }
 
   const updated = [...newItems, ...items];
