@@ -129,7 +129,10 @@ export async function saveUploadedImage(buffer: Buffer, folder: string, hint: st
   if (hasBlobStorage()) {
     let blob;
     try {
-      blob = await put(`${folder}/${filename}`, body, {
+      // A plain Buffer occasionally trips "SharedArrayBuffer is not allowed"
+      // inside @vercel/blob's upload path on Vercel's Node runtime — a Blob
+      // takes a different, safer code path through their SDK.
+      blob = await put(`${folder}/${filename}`, new Blob([new Uint8Array(body)], { type: contentType }), {
         access: "public",
         contentType,
       });
