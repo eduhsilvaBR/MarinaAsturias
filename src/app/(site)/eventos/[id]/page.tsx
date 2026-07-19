@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import EventDescription from "@/components/EventDescription";
 import GalleryGrid from "@/components/GalleryGrid";
 import Reveal from "@/components/Reveal";
-import { readEvents } from "@/lib/store";
+import { getCoverPhoto, readEvents } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
 
@@ -22,13 +22,12 @@ export default async function EventoDetailPage({ params }: { params: Promise<{ i
   const events = await readEvents();
   const event = events.find((e) => e.id === id);
   if (!event) notFound();
+  const cover = getCoverPhoto(event);
 
   return (
     <>
       <section className="relative flex h-[50vh] min-h-[380px] items-end overflow-hidden bg-navy-deep">
-        {event.photos[0] && (
-          <Image src={event.photos[0]} alt={event.name} fill priority sizes="100vw" className="object-cover" />
-        )}
+        {cover && <Image src={cover} alt={event.name} fill priority sizes="100vw" className="object-cover" />}
         <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/50 to-black/20" />
         <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-14 lg:px-10">
           <Link href="/eventos" className="text-xs tracking-[0.2em] text-gold hover:opacity-70">

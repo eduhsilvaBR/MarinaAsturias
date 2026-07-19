@@ -10,6 +10,7 @@ export type EventItem = {
   date: string;
   description?: string;
   photos: string[];
+  coverPhoto?: string;
 };
 
 export type GalleryItem = {
@@ -156,4 +157,8 @@ export async function deleteUploadedImage(publicPath: string) {
   if (!publicPath.startsWith("/uploads/")) return;
   const filePath = path.join(process.cwd(), "public", publicPath);
   await fs.rm(filePath, { force: true });
+}
+
+export function getCoverPhoto(event: Pick<EventItem, "coverPhoto" | "photos">) {
+  return event.coverPhoto || event.photos[0];
 }

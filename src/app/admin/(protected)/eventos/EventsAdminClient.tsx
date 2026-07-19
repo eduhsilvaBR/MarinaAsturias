@@ -100,7 +100,9 @@ export default function EventsAdminClient({ initialEvents }: { initialEvents: Ev
             className="flex items-center gap-4 rounded-lg border border-white/10 bg-neutral-900 p-4"
           >
             <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded bg-neutral-800">
-              {ev.photos[0] && <Image src={ev.photos[0]} alt={ev.name} fill sizes="64px" className="object-cover" />}
+              {(ev.coverPhoto || ev.photos[0]) && (
+                <Image src={ev.coverPhoto || ev.photos[0]} alt={ev.name} fill sizes="64px" className="object-cover" />
+              )}
             </div>
             <div className="flex-1">
               <div className="font-medium">{ev.name}</div>

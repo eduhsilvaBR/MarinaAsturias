@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Reveal, { RevealGroup, RevealItem } from "@/components/Reveal";
-import { readEvents } from "@/lib/store";
+import { getCoverPhoto, readEvents } from "@/lib/store";
 
 export const metadata: Metadata = {
   title: "Eventos — Marina Astúrias",
@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 export default async function EventosPage() {
   const events = await readEvents();
   const sorted = [...events].sort((a, b) => b.date.localeCompare(a.date));
-  const heroImage = sorted[0]?.photos[0];
+  const heroImage = sorted[0] && getCoverPhoto(sorted[0]);
 
   return (
     <>
@@ -51,13 +51,15 @@ export default async function EventosPage() {
           <p className="text-center text-cream/60">Nenhum evento publicado no momento.</p>
         ) : (
           <RevealGroup className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" stagger={0.08}>
-            {sorted.map((event) => (
+            {sorted.map((event) => {
+              const cover = getCoverPhoto(event);
+              return (
               <RevealItem key={event.id}>
                 <Link href={`/eventos/${event.id}`} className="group block">
                   <div className="relative aspect-[4/3] overflow-hidden bg-navy-deep">
-                    {event.photos[0] ? (
+                    {cover ? (
                       <Image
-                        src={event.photos[0]}
+                        src={cover}
                         alt={event.name}
                         fill
                         sizes="(min-width: 1024px) 33vw, 50vw"
@@ -75,7 +77,8 @@ export default async function EventosPage() {
                   </div>
                 </Link>
               </RevealItem>
-            ))}
+              );
+            })}
           </RevealGroup>
         )}
 

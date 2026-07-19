@@ -96,6 +96,37 @@ export default function EventEditClient({ event: initialEvent }: { event: EventI
     }
   }
 
+  async function handleSetCover(src: string) {
+    setEvent((prev) => ({ ...prev, coverPhoto: src }));
+    const res = await fetch(`/api/admin/events/${event.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ coverPhoto: src }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setEvent(data.event);
+      router.refresh();
+    }
+  }
+
+  async function handleReorder(index: number, direction: -1 | 1) {
+    const target = index + direction;
+    if (target < 0 || target >= event.photos.length) return;
+    const reordered = [...event.photos];
+    [reordered[index], reordered[target]] = [reordered[target], reordered[index]];
+    setEvent((prev) => ({ ...prev, photos: reordered }));
+    const res = await fetch(`/api/admin/events/${event.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ photos: reordered }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setEvent(data.event);
+    }
+  }
+
   const slotsLeft = MAX_PHOTOS - event.photos.length;
 
   return (
@@ -171,19 +202,66 @@ export default function EventEditClient({ event: initialEvent }: { event: EventI
         )}
         {error && <p className="mt-3 text-sm text-red-400">{error}</p>}
 
-        <div className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-5">
-          {event.photos.map((src) => (
-            <div key={src} className="group relative aspect-square overflow-hidden rounded bg-neutral-800">
-              <Image src={src} alt="" fill sizes="200px" className="object-cover" />
-              <button
-                type="button"
-                onClick={() => handleDeletePhoto(src)}
-                className="absolute right-1 top-1 rounded bg-black/70 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100"
-              >
-                Excluir
-              </button>
-            </div>
-          ))}
+        {event.photos.length > 0 && (
+          <p className="mt-6 text-xs text-neutral-500">
+            Passe o mouse sobre uma foto para definir como capa, reordenar ou excluir.
+          </p>
+        )}
+        <div className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-5">
+          {event.photos.map((src, index) => {
+            const isCover = event.coverPhoto ? event.coverPhoto === src : index === 0;
+            return (
+              <div key={src} className="group relative aspect-square overflow-hidden rounded bg-neutral-800">
+                <Image src={src} alt="" fill sizes="200px" className="object-cover" />
+
+                {isCover && (
+                  <span className="absolute left-1 top-1 rounded bg-white px-1.5 py-0.5 text-[10px] font-medium text-neutral-950">
+                    Capa
+                  </span>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => handleDeletePhoto(src)}
+                  className="absolute right-1 top-1 rounded bg-black/70 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100"
+                >
+                  Excluir
+                </button>
+
+                <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-1 bg-gradient-to-t from-black/80 to-transparent p-1.5 opacity-0 transition-opacity group-hover:opacity-100">
+                  <div className="flex gap-1">
+                    <button
+                      type="button"
+                      onClick={() => handleReorder(index, -1)}
+                      disabled={index === 0}
+                      className="rounded bg-black/70 px-1.5 py-1 text-xs text-white disabled:opacity-30"
+                      aria-label="Mover para trás"
+                    >
+                      ←
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleReorder(index, 1)}
+                      disabled={index === event.photos.length - 1}
+                      className="rounded bg-black/70 px-1.5 py-1 text-xs text-white disabled:opacity-30"
+                      aria-label="Mover para frente"
+                    >
+                      →
+                    </button>
+                  </div>
+                  {!isCover && (
+                    <button
+                      type="button"
+                      onClick={() => handleSetCover(src)}
+                      className="rounded bg-black/70 px-1.5 py-1 text-[10px] text-white hover:bg-black/90"
+                    >
+                      Definir capa
+                    </button>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </form>
     </div>

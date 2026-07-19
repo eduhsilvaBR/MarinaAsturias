@@ -5,7 +5,7 @@ import { deleteUploadedImage, readEvents, writeEvents } from "@/lib/store";
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   const { id } = await params;
-  const { name, date, description } = await request.json().catch(() => ({}));
+  const { name, date, description, coverPhoto, photos } = await request.json().catch(() => ({}));
 
   const events = await readEvents();
   const event = events.find((e) => e.id === id);
@@ -14,6 +14,10 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
   if (typeof name === "string" && name.trim()) event.name = name.trim();
   if (typeof date === "string" && date.trim()) event.date = date.trim();
   if (typeof description === "string") event.description = description.trim();
+  if (typeof coverPhoto === "string" && event.photos.includes(coverPhoto)) event.coverPhoto = coverPhoto;
+  if (Array.isArray(photos) && photos.length === event.photos.length && photos.every((p) => event.photos.includes(p))) {
+    event.photos = photos;
+  }
 
   await writeEvents(events);
   return NextResponse.json({ event });

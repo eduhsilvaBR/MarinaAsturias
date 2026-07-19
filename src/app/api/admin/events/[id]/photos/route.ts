@@ -75,6 +75,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
   if (!event) return NextResponse.json({ error: "Evento não encontrado." }, { status: 404 });
 
   event.photos = event.photos.filter((p) => p !== src);
+  if (event.coverPhoto === src) event.coverPhoto = undefined;
   await writeEvents(events);
   await deleteUploadedImage(src);
   return NextResponse.json({ event });
