@@ -42,6 +42,28 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   return NextResponse.json({ event, skipped: files.length - toUpload.length });
 }
 
+/** Appends URLs of photos already uploaded directly to Blob from the browser (see /api/admin/blob-upload). */
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  if (!(await isAuthenticated())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  const { id } = await params;
+
+  const events = await readEvents();
+  const event = events.find((e) => e.id === id);
+  if (!event) return NextResponse.json({ error: "Evento não encontrado." }, { status: 404 });
+
+  const { urls } = await request.json().catch(() => ({ urls: [] }));
+  if (!Array.isArray(urls) || urls.length === 0) {
+    return NextResponse.json({ error: "Nenhuma foto enviada." }, { status: 400 });
+  }
+
+  const slotsLeft = MAX_PHOTOS - event.photos.length;
+  const toAdd = urls.slice(0, slotsLeft).filter((u): u is string => typeof u === "string");
+
+  event.photos.push(...toAdd);
+  await writeEvents(events);
+  return NextResponse.json({ event, skipped: urls.length - toAdd.length });
+}
+
 export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   const { id } = await params;

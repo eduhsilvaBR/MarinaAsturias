@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, useState, type FormEvent } from "react";
 import type { GalleryItem } from "@/lib/store";
+import { uploadPhotos } from "@/lib/uploadClient";
 
 export default function GalleryAdminClient({ initialItems }: { initialItems: GalleryItem[] }) {
   const router = useRouter();
@@ -19,21 +20,37 @@ export default function GalleryAdminClient({ initialItems }: { initialItems: Gal
     setUploading(true);
     setError("");
 
-    const form = new FormData();
-    Array.from(files).forEach((f) => form.append("photos", f));
-
     try {
-      const res = await fetch("/api/admin/gallery", { method: "POST", body: form });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setError(data.error || `Erro ao enviar fotos (${res.status}).`);
+      const { urls, formResponse } = await uploadPhotos(Array.from(files), "galeria", "/api/admin/gallery");
+
+      let data: { items?: GalleryItem[]; error?: string };
+      let ok: boolean;
+      let status: number;
+
+      if (urls) {
+        const res = await fetch("/api/admin/gallery", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ urls }),
+        });
+        data = await res.json().catch(() => ({}));
+        ok = res.ok;
+        status = res.status;
+      } else {
+        data = await formResponse!.json().catch(() => ({}));
+        ok = formResponse!.ok;
+        status = formResponse!.status;
+      }
+
+      if (!ok || !data.items) {
+        setError(data.error || `Erro ao enviar fotos (${status}).`);
         return;
       }
       setItems(data.items);
       if (fileInputRef.current) fileInputRef.current.value = "";
       router.refresh();
-    } catch {
-      setError("Falha de conexão ao enviar fotos. Tente novamente.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Falha de conexão ao enviar fotos. Tente novamente.");
     } finally {
       setUploading(false);
     }

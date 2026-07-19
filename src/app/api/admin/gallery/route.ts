@@ -39,3 +39,22 @@ export async function POST(request: NextRequest) {
   await writeGallery(updated);
   return NextResponse.json({ items: updated });
 }
+
+/** Appends URLs of photos already uploaded directly to Blob from the browser (see /api/admin/blob-upload). */
+export async function PUT(request: NextRequest) {
+  if (!(await isAuthenticated())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+
+  const { urls } = await request.json().catch(() => ({ urls: [] }));
+  if (!Array.isArray(urls) || urls.length === 0) {
+    return NextResponse.json({ error: "Nenhuma foto enviada." }, { status: 400 });
+  }
+
+  const items = await readGallery();
+  const newItems: GalleryItem[] = urls
+    .filter((u): u is string => typeof u === "string")
+    .map((src) => ({ id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, src }));
+
+  const updated = [...newItems, ...items];
+  await writeGallery(updated);
+  return NextResponse.json({ items: updated });
+}

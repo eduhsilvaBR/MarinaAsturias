@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState, type FormEvent } from "react";
 import type { EventItem } from "@/lib/store";
+import { uploadPhotos } from "@/lib/uploadClient";
 
 const MAX_PHOTOS = 20;
 
@@ -42,21 +43,41 @@ export default function EventEditClient({ event: initialEvent }: { event: EventI
     setUploading(true);
     setError("");
 
-    const form = new FormData();
-    Array.from(files).forEach((f) => form.append("photos", f));
-
     try {
-      const res = await fetch(`/api/admin/events/${event.id}/photos`, { method: "POST", body: form });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setError(data.error || `Erro ao enviar fotos (${res.status}).`);
+      const { urls, formResponse } = await uploadPhotos(
+        Array.from(files),
+        `events/${event.id}`,
+        `/api/admin/events/${event.id}/photos`,
+      );
+
+      let data: { event?: EventItem; error?: string };
+      let ok: boolean;
+      let status: number;
+
+      if (urls) {
+        const res = await fetch(`/api/admin/events/${event.id}/photos`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ urls }),
+        });
+        data = await res.json().catch(() => ({}));
+        ok = res.ok;
+        status = res.status;
+      } else {
+        data = await formResponse!.json().catch(() => ({}));
+        ok = formResponse!.ok;
+        status = formResponse!.status;
+      }
+
+      if (!ok || !data.event) {
+        setError(data.error || `Erro ao enviar fotos (${status}).`);
         return;
       }
       setEvent(data.event);
       if (fileInputRef.current) fileInputRef.current.value = "";
       router.refresh();
-    } catch {
-      setError("Falha de conexão ao enviar fotos. Tente novamente.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Falha de conexão ao enviar fotos. Tente novamente.");
     } finally {
       setUploading(false);
     }
