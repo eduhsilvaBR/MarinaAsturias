@@ -119,16 +119,24 @@ export async function saveUploadedImage(buffer: Buffer, folder: string, hint: st
     ext = "jpg";
     contentType = "image/jpeg";
   } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
     console.error("sharp processing failed, storing original file instead", err);
+    throw new Error(`[sharp stage] ${message}`);
   }
 
   const filename = `${Date.now()}-${slugify(hint) || "foto"}.${ext}`;
 
   if (hasBlobStorage()) {
-    const blob = await put(`${folder}/${filename}`, body, {
-      access: "public",
-      contentType,
-    });
+    let blob;
+    try {
+      blob = await put(`${folder}/${filename}`, body, {
+        access: "public",
+        contentType,
+      });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      throw new Error(`[blob stage] ${message}`);
+    }
     return blob.url;
   }
 
