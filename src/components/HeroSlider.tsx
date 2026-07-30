@@ -45,12 +45,12 @@ export default function HeroSlider() {
               style={{ objectPosition: slide.position ?? "center" }}
             />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/20 to-black/30" />
-          <div className="absolute inset-0 bg-navy-deep/25" />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/25 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/30 to-transparent" />
         </motion.div>
       </AnimatePresence>
 
-      <div className="relative z-10 flex h-full max-w-7xl flex-col justify-center px-6 mx-auto lg:px-10">
+      <div className="relative z-10 flex h-full max-w-7xl flex-col justify-end px-6 pb-24 mx-auto lg:px-10 lg:pb-28">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
