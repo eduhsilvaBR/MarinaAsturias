@@ -33,7 +33,7 @@ export default async function GaleriaPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
-        <Reveal className="mb-10 max-w-2xl text-[15px] leading-relaxed text-cream/70">
+        <Reveal className="mb-10 max-w-2xl text-[15px] leading-relaxed text-ink/70">
           Um pouco da estrutura, das embarcações e dos momentos vividos na Porto Marina Astúrias.
         </Reveal>
         <GalleryGrid images={items.map((i) => i.src)} />

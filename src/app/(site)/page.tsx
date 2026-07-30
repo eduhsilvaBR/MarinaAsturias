@@ -14,22 +14,22 @@ export default function Home() {
       <section className="mx-auto max-w-3xl px-6 py-28 text-center lg:px-10">
         <Reveal>
           <span className="text-xs tracking-[0.3em] text-gold">A MARINA</span>
-          <h2 className="mt-5 font-serif text-4xl font-medium text-cream sm:text-5xl">
+          <h2 className="mt-5 font-serif text-4xl font-medium text-ink sm:text-5xl">
             Conheça a Marina Astúrias
           </h2>
-          <p className="mt-6 text-[15px] leading-relaxed text-cream/70">{siteInfo.boilerplate}</p>
+          <p className="mt-6 text-[15px] leading-relaxed text-ink/70">{siteInfo.boilerplate}</p>
         </Reveal>
       </section>
 
       {/* Stats */}
-      <section className="border-y border-cream/10 bg-navy-deep">
-        <RevealGroup className="mx-auto grid max-w-7xl grid-cols-2 gap-px bg-cream/10 px-0 lg:grid-cols-4" stagger={0.12}>
+      <section className="border-y border-ink/10 bg-mist">
+        <RevealGroup className="mx-auto grid max-w-7xl grid-cols-2 gap-px bg-ink/10 px-0 lg:grid-cols-4" stagger={0.12}>
           {siteInfo.stats.map((stat) => (
-            <RevealItem key={stat.label} className="bg-navy-deep px-8 py-14 text-center">
+            <RevealItem key={stat.label} className="bg-mist px-8 py-14 text-center">
               <div className="font-serif text-4xl text-gold sm:text-5xl">
                 <Counter value={stat.value} suffix={stat.suffix} />
               </div>
-              <div className="mt-3 text-xs tracking-[0.15em] text-cream/60">{stat.label.toUpperCase()}</div>
+              <div className="mt-3 text-xs tracking-[0.15em] text-ink/60">{stat.label.toUpperCase()}</div>
             </RevealItem>
           ))}
         </RevealGroup>
@@ -48,10 +48,10 @@ export default function Home() {
         </Reveal>
         <Reveal delay={0.15} className="px-6 py-20 lg:px-16">
           <span className="text-xs tracking-[0.3em] text-gold">GASTRONOMIA</span>
-          <h3 className="mt-4 font-serif text-3xl font-medium text-cream sm:text-4xl">
+          <h3 className="mt-4 font-serif text-3xl font-medium text-ink sm:text-4xl">
             Piscina, lanchonete e restaurante exclusivo
           </h3>
-          <p className="mt-5 max-w-md text-[15px] leading-relaxed text-cream/70">
+          <p className="mt-5 max-w-md text-[15px] leading-relaxed text-ink/70">
             Dentro da Marina também há ótimas opções em sua área gastronômica. Possui piscina e lanchonete,
             além de um restaurante de espaço exclusivo para marinheiros e funcionários, com destaque para os
             pratos mediterrâneos e a variedade de camarões.
@@ -69,10 +69,10 @@ export default function Home() {
       <section className="mx-auto grid max-w-7xl items-center gap-0 lg:grid-cols-2">
         <Reveal className="order-2 px-6 py-20 lg:order-1 lg:px-16">
           <span className="text-xs tracking-[0.3em] text-gold">HELIPONTO</span>
-          <h3 className="mt-4 font-serif text-3xl font-medium text-cream sm:text-4xl">
+          <h3 className="mt-4 font-serif text-3xl font-medium text-ink sm:text-4xl">
             Pousos e decolagens homologados
           </h3>
-          <p className="mt-5 max-w-md text-[15px] leading-relaxed text-cream/70">
+          <p className="mt-5 max-w-md text-[15px] leading-relaxed text-ink/70">
             A Porto Marina Astúrias possui um heliponto devidamente homologado pelo Departamento de Aviação
             Civil e disponível para pousos e decolagens, inclusive com espaço para estacionamento temporário
             dos helicópteros.
@@ -99,7 +99,7 @@ export default function Home() {
       <section className="mx-auto max-w-7xl px-6 py-28 lg:px-10">
         <Reveal className="mb-12 text-center">
           <span className="text-xs tracking-[0.3em] text-gold">GALERIA</span>
-          <h3 className="mt-4 font-serif text-4xl font-medium text-cream">Um pouco da nossa marina</h3>
+          <h3 className="mt-4 font-serif text-4xl font-medium text-ink">Um pouco da nossa marina</h3>
         </Reveal>
         <RevealGroup className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6" stagger={0.05}>
           {homeGallery.map((src, i) => (
@@ -112,7 +112,7 @@ export default function Home() {
                   sizes="(min-width: 1024px) 16vw, 33vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-navy-deep/0 transition-colors duration-500 group-hover:bg-navy-deep/20" />
+                <div className="absolute inset-0 bg-ink/0 transition-colors duration-500 group-hover:bg-ink/20" />
               </Link>
             </RevealItem>
           ))}
@@ -120,7 +120,7 @@ export default function Home() {
         <Reveal className="mt-10 text-center">
           <Link
             href="/galeria"
-            className="inline-block border border-gold/70 px-8 py-3.5 text-[13px] tracking-[0.15em] text-gold transition-colors hover:bg-gold hover:text-navy-deep"
+            className="inline-block border border-gold/70 px-8 py-3.5 text-[13px] tracking-[0.15em] text-gold transition-colors hover:bg-gold hover:text-off-white"
           >
             VER GALERIA COMPLETA
           </Link>
@@ -128,18 +128,18 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="border-t border-cream/10 bg-navy-deep">
+      <section className="border-t border-ink/10 bg-mist">
         <div className="mx-auto max-w-6xl px-6 py-28 lg:px-10">
           <Reveal className="mb-14 text-center">
             <span className="text-xs tracking-[0.3em] text-gold">NOSSOS CLIENTES</span>
-            <h3 className="mt-4 font-serif text-4xl font-medium text-cream">Opiniões</h3>
+            <h3 className="mt-4 font-serif text-4xl font-medium text-ink">Opiniões</h3>
           </Reveal>
           <RevealGroup className="grid gap-8 sm:grid-cols-3" stagger={0.12}>
             {testimonials.map((t) => (
-              <RevealItem key={t.name} className="border border-cream/10 px-8 py-10 text-center">
+              <RevealItem key={t.name} className="border border-ink/10 bg-off-white px-8 py-10 text-center">
                 <div className="text-xs tracking-[0.15em] text-gold">{t.tag.toUpperCase()}</div>
-                <p className="mt-5 font-serif text-xl italic leading-snug text-cream/90">&ldquo;{t.quote}&rdquo;</p>
-                <div className="mt-6 text-xs tracking-[0.15em] text-cream/50">{t.name.toUpperCase()}</div>
+                <p className="mt-5 font-serif text-xl italic leading-snug text-ink/90">&ldquo;{t.quote}&rdquo;</p>
+                <div className="mt-6 text-xs tracking-[0.15em] text-ink/50">{t.name.toUpperCase()}</div>
               </RevealItem>
             ))}
           </RevealGroup>
@@ -149,20 +149,20 @@ export default function Home() {
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-6 py-24 text-center lg:px-10">
         <Reveal>
-          <h3 className="font-serif text-3xl font-medium text-cream sm:text-4xl">
+          <h3 className="font-serif text-3xl font-medium text-ink sm:text-4xl">
             Venha conhecer a melhor marina do Brasil
           </h3>
-          <p className="mx-auto mt-4 max-w-lg text-[15px] text-cream/70">{siteInfo.address}</p>
+          <p className="mx-auto mt-4 max-w-lg text-[15px] text-ink/70">{siteInfo.address}</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-5">
             <Link
               href="/fale-conosco"
-              className="border border-gold bg-gold px-8 py-3.5 text-[13px] tracking-[0.15em] text-navy-deep transition-colors hover:bg-transparent hover:text-gold"
+              className="border border-gold bg-gold px-8 py-3.5 text-[13px] tracking-[0.15em] text-off-white transition-colors hover:bg-transparent hover:text-gold"
             >
               FALE CONOSCO
             </Link>
             <Link
               href="/eventos"
-              className="border border-cream/40 px-8 py-3.5 text-[13px] tracking-[0.15em] text-cream transition-colors hover:border-cream hover:bg-cream/10"
+              className="border border-ink/30 px-8 py-3.5 text-[13px] tracking-[0.15em] text-ink transition-colors hover:border-ink hover:bg-ink/5"
             >
               VER EVENTOS
             </Link>

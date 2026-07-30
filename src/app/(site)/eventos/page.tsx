@@ -39,7 +39,7 @@ export default async function EventosPage() {
 
       <section className="mx-auto max-w-3xl px-6 py-20 text-center lg:px-10">
         <Reveal>
-          <p className="text-[15px] leading-relaxed text-cream/70">
+          <p className="text-[15px] leading-relaxed text-ink/70">
             A Marina Astúrias recebe encontros especiais à beira do Canal de Santos, com estrutura de gastronomia,
             vista para os píeres e todo o conforto de um clube náutico.
           </p>
@@ -48,7 +48,7 @@ export default async function EventosPage() {
 
       <section className="mx-auto max-w-7xl px-6 pb-28 lg:px-10">
         {sorted.length === 0 ? (
-          <p className="text-center text-cream/60">Nenhum evento publicado no momento.</p>
+          <p className="text-center text-ink/60">Nenhum evento publicado no momento.</p>
         ) : (
           <RevealGroup className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" stagger={0.08}>
             {sorted.map((event) => {
@@ -56,7 +56,7 @@ export default async function EventosPage() {
               return (
               <RevealItem key={event.id}>
                 <Link href={`/eventos/${event.id}`} className="group block">
-                  <div className="relative aspect-[4/3] overflow-hidden bg-navy-deep">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-mist">
                     {cover ? (
                       <Image
                         src={cover}
@@ -66,11 +66,11 @@ export default async function EventosPage() {
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
                       />
                     ) : (
-                      <div className="flex h-full items-center justify-center text-cream/30">Sem fotos</div>
+                      <div className="flex h-full items-center justify-center text-ink/30">Sem fotos</div>
                     )}
                   </div>
                   <div className="mt-4 flex items-baseline justify-between gap-3">
-                    <span className="font-serif text-xl text-cream">{event.name}</span>
+                    <span className="font-serif text-xl text-ink">{event.name}</span>
                     <span className="shrink-0 text-xs tracking-[0.1em] text-gold">
                       {new Date(event.date + "T00:00:00").toLocaleDateString("pt-BR")}
                     </span>
@@ -83,10 +83,10 @@ export default async function EventosPage() {
         )}
 
         <Reveal className="mt-16 text-center">
-          <p className="text-[15px] text-cream/70">Quer realizar seu evento na Marina Astúrias?</p>
+          <p className="text-[15px] text-ink/70">Quer realizar seu evento na Marina Astúrias?</p>
           <Link
             href="/fale-conosco"
-            className="mt-6 inline-block border border-gold bg-gold px-8 py-3.5 text-[13px] tracking-[0.15em] text-navy-deep transition-colors hover:bg-transparent hover:text-gold"
+            className="mt-6 inline-block border border-gold bg-gold px-8 py-3.5 text-[13px] tracking-[0.15em] text-off-white transition-colors hover:bg-transparent hover:text-gold"
           >
             FALE CONOSCO
           </Link>

@@ -9,6 +9,7 @@ import { navGroups } from "@/content/site";
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const solid = scrolled || open;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -24,15 +25,24 @@ export default function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-        scrolled || open ? "bg-navy/95 backdrop-blur-sm shadow-lg shadow-black/20" : "bg-gradient-to-b from-black/40 to-transparent"
+        solid ? "bg-off-white/95 backdrop-blur-sm shadow-sm shadow-black/5" : "bg-gradient-to-b from-black/40 to-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
         <Link href="/" className="relative block h-14 w-[44px] shrink-0 lg:h-16 lg:w-[51px]">
-          <Image src="/logo/logo-lockup.png" alt="Marina Astúrias" fill className="object-contain" priority />
+          <Image
+            src={solid ? "/logo/logo-lockup-dark.png" : "/logo/logo-lockup.png"}
+            alt="Marina Astúrias"
+            fill
+            className="object-contain"
+            priority />
         </Link>
 
-        <nav className="hidden items-center gap-5 text-[12px] tracking-[0.05em] text-cream/85 xl:gap-7 lg:flex">
+        <nav
+          className={`hidden items-center gap-5 text-[12px] tracking-[0.05em] transition-colors duration-500 xl:gap-7 lg:flex ${
+            solid ? "text-ink/80" : "text-cream/85"
+          }`}
+        >
           {navGroups.map((item) => (
             <div key={item.label} className="group relative py-2">
               <Link href={item.href} className="whitespace-nowrap transition-colors hover:text-gold">
@@ -40,12 +50,12 @@ export default function Header() {
               </Link>
               {"children" in item && item.children && (
                 <div className="invisible absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
-                  <div className="rounded-md border border-cream/10 bg-navy-deep/98 py-2 shadow-xl">
+                  <div className="rounded-md border border-ink/10 bg-off-white py-2 shadow-xl">
                     {item.children.map((child) => (
                       <Link
                         key={child.href}
                         href={child.href}
-                        className="block px-5 py-2.5 text-xs tracking-wide text-cream/80 transition-colors hover:bg-navy-light hover:text-gold"
+                        className="block px-5 py-2.5 text-xs tracking-wide text-ink/75 transition-colors hover:bg-mist hover:text-gold"
                       >
                         {child.label}
                       </Link>
@@ -62,9 +72,13 @@ export default function Header() {
           onClick={() => setOpen((v) => !v)}
           className="flex h-9 w-9 flex-col items-center justify-center gap-1.5 lg:hidden"
         >
-          <span className={`h-px w-6 bg-cream transition-transform ${open ? "translate-y-2 rotate-45" : ""}`} />
-          <span className={`h-px w-6 bg-cream transition-opacity ${open ? "opacity-0" : ""}`} />
-          <span className={`h-px w-6 bg-cream transition-transform ${open ? "-translate-y-2 -rotate-45" : ""}`} />
+          <span
+            className={`h-px w-6 transition-transform ${solid ? "bg-ink" : "bg-cream"} ${open ? "translate-y-2 rotate-45" : ""}`}
+          />
+          <span className={`h-px w-6 transition-opacity ${solid ? "bg-ink" : "bg-cream"} ${open ? "opacity-0" : ""}`} />
+          <span
+            className={`h-px w-6 transition-transform ${solid ? "bg-ink" : "bg-cream"} ${open ? "-translate-y-2 -rotate-45" : ""}`}
+          />
         </button>
       </div>
 
@@ -75,13 +89,13 @@ export default function Header() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="overflow-y-auto border-t border-cream/10 bg-navy-deep lg:hidden"
+            className="overflow-y-auto border-t border-ink/10 bg-off-white lg:hidden"
             style={{ maxHeight: "calc(100vh - 76px)" }}
           >
             <div className="flex flex-col px-6 py-4">
               {navGroups.map((item) => (
-                <div key={item.label} className="border-b border-cream/10 py-3">
-                  <Link href={item.href} onClick={() => setOpen(false)} className="text-sm tracking-wide text-cream">
+                <div key={item.label} className="border-b border-ink/10 py-3">
+                  <Link href={item.href} onClick={() => setOpen(false)} className="text-sm tracking-wide text-ink">
                     {item.label.toUpperCase()}
                   </Link>
                   {"children" in item && item.children && (
@@ -91,7 +105,7 @@ export default function Header() {
                           key={child.href}
                           href={child.href}
                           onClick={() => setOpen(false)}
-                          className="text-xs text-cream/65"
+                          className="text-xs text-ink/65"
                         >
                           {child.label}
                         </Link>

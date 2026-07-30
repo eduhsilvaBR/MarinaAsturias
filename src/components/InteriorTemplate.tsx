@@ -17,7 +17,7 @@ export default function InteriorTemplate({ page }: { page: InteriorPage }) {
       <section className="mx-auto max-w-4xl px-6 py-20 lg:px-10">
         <Reveal className="flex flex-col gap-5">
           {page.paragraphs.map((p, i) => (
-            <p key={i} className="text-[15px] leading-relaxed text-cream/75">
+            <p key={i} className="text-[15px] leading-relaxed text-ink/75">
               {p}
             </p>
           ))}
@@ -26,7 +26,7 @@ export default function InteriorTemplate({ page }: { page: InteriorPage }) {
         {page.list && (
           <RevealGroup className="mt-10 grid gap-x-8 gap-y-3 sm:grid-cols-2" stagger={0.04}>
             {page.list.map((item) => (
-              <RevealItem key={item} y={12} className="flex items-start gap-3 text-[14px] text-cream/75">
+              <RevealItem key={item} y={12} className="flex items-start gap-3 text-[14px] text-ink/75">
                 <span className="mt-1 h-1.5 w-1.5 shrink-0 bg-gold" />
                 <span>{item}</span>
               </RevealItem>
@@ -35,11 +35,11 @@ export default function InteriorTemplate({ page }: { page: InteriorPage }) {
         )}
 
         {page.stats && (
-          <RevealGroup className="mt-12 grid grid-cols-2 gap-6 border-y border-cream/10 py-10 sm:grid-cols-4" stagger={0.08}>
+          <RevealGroup className="mt-12 grid grid-cols-2 gap-6 border-y border-ink/10 py-10 sm:grid-cols-4" stagger={0.08}>
             {page.stats.map((s) => (
               <RevealItem key={s.label} className="text-center">
                 <div className="font-serif text-3xl text-gold">{s.value}</div>
-                <div className="mt-2 text-xs tracking-[0.12em] text-cream/55">{s.label.toUpperCase()}</div>
+                <div className="mt-2 text-xs tracking-[0.12em] text-ink/55">{s.label.toUpperCase()}</div>
               </RevealItem>
             ))}
           </RevealGroup>

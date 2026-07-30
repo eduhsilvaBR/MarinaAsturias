@@ -32,7 +32,7 @@ export default function EstruturaPage() {
 
       <section className="mx-auto max-w-3xl px-6 pt-20 text-center lg:px-10">
         <Reveal>
-          <p className="text-[15px] leading-relaxed text-cream/70">{siteInfo.boilerplate}</p>
+          <p className="text-[15px] leading-relaxed text-ink/70">{siteInfo.boilerplate}</p>
         </Reveal>
       </section>
 

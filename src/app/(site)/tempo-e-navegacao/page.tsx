@@ -27,10 +27,10 @@ export default function TempoENavegacaoPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
-        <Reveal className="mb-8 max-w-2xl text-[15px] leading-relaxed text-cream/70">
+        <Reveal className="mb-8 max-w-2xl text-[15px] leading-relaxed text-ink/70">
           Acompanhe a previsão do tempo e a tábua de marés do Canal de Santos antes de zarpar.
         </Reveal>
-        <Reveal className="overflow-hidden rounded-sm border border-cream/10 bg-white">
+        <Reveal className="overflow-hidden rounded-sm border border-ink/10 bg-white">
           <iframe
             src="https://www.climatempo.com.br/tabua-de-mares"
             title="ClimaTempo — Tábua de Marés"

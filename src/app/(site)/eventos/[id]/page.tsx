@@ -47,10 +47,10 @@ export default async function EventoDetailPage({ params }: { params: Promise<{ i
         <GalleryGrid images={event.photos} />
 
         <Reveal className="mt-16 text-center">
-          <p className="text-[15px] text-cream/70">Quer realizar seu evento na Marina Astúrias?</p>
+          <p className="text-[15px] text-ink/70">Quer realizar seu evento na Marina Astúrias?</p>
           <Link
             href="/fale-conosco"
-            className="mt-6 inline-block border border-gold bg-gold px-8 py-3.5 text-[13px] tracking-[0.15em] text-navy-deep transition-colors hover:bg-transparent hover:text-gold"
+            className="mt-6 inline-block border border-gold bg-gold px-8 py-3.5 text-[13px] tracking-[0.15em] text-off-white transition-colors hover:bg-transparent hover:text-gold"
           >
             FALE CONOSCO
           </Link>

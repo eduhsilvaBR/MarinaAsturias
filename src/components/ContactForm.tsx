@@ -23,48 +23,48 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       <div className="grid gap-5 sm:grid-cols-2">
-        <label className="flex flex-col gap-2 text-xs tracking-[0.1em] text-cream/60">
+        <label className="flex flex-col gap-2 text-xs tracking-[0.1em] text-ink/60">
           NOME *
           <input
             required
             name="nome"
-            className="border border-cream/20 bg-transparent px-4 py-3 text-sm text-cream outline-none transition-colors focus:border-gold"
+            className="border border-ink/20 bg-transparent px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-gold"
           />
         </label>
-        <label className="flex flex-col gap-2 text-xs tracking-[0.1em] text-cream/60">
+        <label className="flex flex-col gap-2 text-xs tracking-[0.1em] text-ink/60">
           SOBRENOME *
           <input
             required
             name="sobrenome"
-            className="border border-cream/20 bg-transparent px-4 py-3 text-sm text-cream outline-none transition-colors focus:border-gold"
+            className="border border-ink/20 bg-transparent px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-gold"
           />
         </label>
       </div>
-      <label className="flex flex-col gap-2 text-xs tracking-[0.1em] text-cream/60">
+      <label className="flex flex-col gap-2 text-xs tracking-[0.1em] text-ink/60">
         E-MAIL *
         <input
           required
           type="email"
           name="email"
-          className="border border-cream/20 bg-transparent px-4 py-3 text-sm text-cream outline-none transition-colors focus:border-gold"
+          className="border border-ink/20 bg-transparent px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-gold"
         />
       </label>
-      <label className="flex flex-col gap-2 text-xs tracking-[0.1em] text-cream/60">
+      <label className="flex flex-col gap-2 text-xs tracking-[0.1em] text-ink/60">
         MENSAGEM *
         <textarea
           required
           name="mensagem"
           rows={5}
-          className="border border-cream/20 bg-transparent px-4 py-3 text-sm text-cream outline-none transition-colors focus:border-gold"
+          className="border border-ink/20 bg-transparent px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-gold"
         />
       </label>
       <button
         type="submit"
-        className="mt-2 self-start border border-gold bg-gold px-8 py-3.5 text-[13px] tracking-[0.15em] text-navy-deep transition-colors hover:bg-transparent hover:text-gold"
+        className="mt-2 self-start border border-gold bg-gold px-8 py-3.5 text-[13px] tracking-[0.15em] text-off-white transition-colors hover:bg-transparent hover:text-gold"
       >
         ENVIAR PELO WHATSAPP
       </button>
-      {sent && <p className="text-xs text-cream/50">Abrimos o WhatsApp com sua mensagem pronta para envio.</p>}
+      {sent && <p className="text-xs text-ink/50">Abrimos o WhatsApp com sua mensagem pronta para envio.</p>}
     </form>
   );
 }

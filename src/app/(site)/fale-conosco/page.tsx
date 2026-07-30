@@ -30,7 +30,7 @@ export default function FaleConoscoPage() {
 
       <section className="mx-auto grid max-w-6xl gap-16 px-6 py-20 lg:grid-cols-2 lg:px-10">
         <Reveal>
-          <p className="text-[15px] leading-relaxed text-cream/70">
+          <p className="text-[15px] leading-relaxed text-ink/70">
             A Central de Atendimento é um canal direto de comunicação e prestação de serviço da Porto Marina
             Astúrias com seus clientes.
           </p>
@@ -38,27 +38,27 @@ export default function FaleConoscoPage() {
           <dl className="mt-10 flex flex-col gap-6 text-sm">
             <div>
               <dt className="text-xs tracking-[0.15em] text-gold">ENDEREÇO</dt>
-              <dd className="mt-2 text-cream/75">{siteInfo.address}</dd>
+              <dd className="mt-2 text-ink/75">{siteInfo.address}</dd>
             </div>
             <div>
               <dt className="text-xs tracking-[0.15em] text-gold">TELEFONES</dt>
-              <dd className="mt-2 text-cream/75">{siteInfo.phones.join(" · ")}</dd>
+              <dd className="mt-2 text-ink/75">{siteInfo.phones.join(" · ")}</dd>
             </div>
             <div>
               <dt className="text-xs tracking-[0.15em] text-gold">WHATSAPP</dt>
               <dd className="mt-2">
-                <a href={siteInfo.whatsappHref} target="_blank" rel="noreferrer" className="text-cream/75 hover:text-gold">
+                <a href={siteInfo.whatsappHref} target="_blank" rel="noreferrer" className="text-ink/75 hover:text-gold">
                   {siteInfo.whatsapp}
                 </a>
               </dd>
             </div>
             <div>
               <dt className="text-xs tracking-[0.15em] text-gold">HORÁRIO</dt>
-              <dd className="mt-2 text-cream/75">{siteInfo.hours}</dd>
+              <dd className="mt-2 text-ink/75">{siteInfo.hours}</dd>
             </div>
             <div>
               <dt className="text-xs tracking-[0.15em] text-gold">COORDENADAS</dt>
-              <dd className="mt-2 text-cream/75">{siteInfo.coords}</dd>
+              <dd className="mt-2 text-ink/75">{siteInfo.coords}</dd>
             </div>
           </dl>
         </Reveal>
