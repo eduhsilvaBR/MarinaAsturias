@@ -1,4 +1,5 @@
 import Image from "next/image";
+import GalleryGrid from "@/components/GalleryGrid";
 import Reveal, { RevealGroup, RevealItem } from "@/components/Reveal";
 import type { InteriorPage } from "@/content/site";
 
@@ -48,19 +49,7 @@ export default function InteriorTemplate({ page }: { page: InteriorPage }) {
 
       {page.gallery && page.gallery.length > 0 && (
         <section className="mx-auto max-w-7xl px-6 pb-24 lg:px-10">
-          <RevealGroup className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4" stagger={0.05}>
-            {page.gallery.map((src, i) => (
-              <RevealItem key={src} y={16} className="group relative aspect-[4/3] overflow-hidden">
-                <Image
-                  src={src}
-                  alt={`${page.title} — foto ${i + 1}`}
-                  fill
-                  sizes="(min-width: 1024px) 25vw, 50vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-              </RevealItem>
-            ))}
-          </RevealGroup>
+          <GalleryGrid images={page.gallery} />
         </section>
       )}
     </>
